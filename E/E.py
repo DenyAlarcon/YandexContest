@@ -1,4 +1,5 @@
 import sys
+import timeit
 
 
 def intersects(first_rect, second_rect):
@@ -11,7 +12,10 @@ def intersects(first_rect, second_rect):
 
 
 def main():
-    n = int(sys.stdin.readline())
+    input_number = 1
+    with open(f"E/input{input_number}.txt") as f:
+        n = int(f.readline())
+    
     counts = [0] * n
     rects = []
 
@@ -23,8 +27,11 @@ def main():
             if i != j and intersects(rects[i], rects[j]):
                 counts[i] += 1
                 counts[j] += 1
-    print(' '.join(map(str, counts)))
+
+    with open(f"D/output{input_number}.txt", "w") as f:
+        f.write(' '.join(map(str, counts)))
 
 
 if __name__ == "__main__":
-    main()
+    elapsed_time = timeit.timeit(stmt='main()', globals=globals(), number=1)
+    print("Execution time: {:.3f} seconds".format(elapsed_time))

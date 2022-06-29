@@ -39,10 +39,13 @@ def main():
         for _ in range(T):
             tasks.append(tuple(map(int, f.readline().split())))
 
-    with open("C/output.txt", "w") as f:
-        for task in tasks:
-            f.write("{0} ".format(get_max_gcd(
-                task[0], task[1], prime_numbers)))
+    # with open("C/output.txt", "w") as f:
+    #     for task in tasks:
+    #         f.write("{0} ".format(get_max_gcd(
+    #             task[0], task[1], prime_numbers)))
+
+    for task in tasks:
+        print("{0} ".format(get_max_gcd(task[0], task[1], prime_numbers)), end='')
 
 
 if __name__ == "__main__":
@@ -51,5 +54,5 @@ if __name__ == "__main__":
     # elapsed_time = time.time() - start_time
     # print("Execution time: {:.3f} seconds".format(elapsed_time))
 
-    elapsed_time = timeit.timeit(stmt='main()', globals=globals(), number=1)
+    elapsed_time = timeit.timeit(stmt="main()", globals=globals(), number=1)
     print("Execution time: {:.3f} seconds".format(elapsed_time))
