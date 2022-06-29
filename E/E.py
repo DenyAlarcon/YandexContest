@@ -12,26 +12,28 @@ def intersects(first_rect, second_rect):
 
 
 def main():
-    input_number = 1
-    with open(f"E/input{input_number}.txt") as f:
-        n = int(f.readline())
-    
-    counts = [0] * n
+    input_number = 3
     rects = []
 
-    for _ in range(n):
-        rects.append(tuple(map(int, sys.stdin.readline().split())))
+    with open(f"E/input{input_number}.txt") as f:
+        n = int(f.readline())
+        for _ in range(n):
+            rects.append(tuple(map(int, f.readline().split())))
+
+    counts = [0] * n
 
     for i in range(n):
         for j in range(i + 1, n):
-            if i != j and intersects(rects[i], rects[j]):
+            if intersects(rects[i], rects[j]):
                 counts[i] += 1
                 counts[j] += 1
 
-    with open(f"D/output{input_number}.txt", "w") as f:
+    with open(f"E/output{input_number}.txt", "w") as f:
         f.write(' '.join(map(str, counts)))
+
+    # print(' '.join(map(str, counts)))
 
 
 if __name__ == "__main__":
-    elapsed_time = timeit.timeit(stmt='main()', globals=globals(), number=1)
+    elapsed_time = timeit.timeit(stmt="main()", globals=globals(), number=1)
     print("Execution time: {:.3f} seconds".format(elapsed_time))
