@@ -1,11 +1,19 @@
-def check_path(citites_inputs, results, visited, current_city, end, path_length): 
-    path_length += 1
-    for city_input in citites_inputs[current_city - 1]:
-        if city_input == end:
-            results.append(path_length)
-        elif current_city not in visited:
-            visited.append(current_city)
-            check_path(citites_inputs, results, visited, city_input, end, path_length)
+def bfs(graph, start, end):
+    path_length = 0
+    visited = [start]
+    queue = [start]
+    
+    while queue:
+        s = queue.pop(0)
+        path_length += 1
+        
+        for neighbor in graph[s]:
+            if neighbor == end:
+                return path_length
+            if neighbor not in visited:
+                visited.append(neighbor)
+                queue.append(neighbor)
+    return -1
 
 def main():
     cities_coords = []
@@ -16,23 +24,18 @@ def main():
         k = int(f.readline().strip())
         path = tuple(map(int, f.readline().split()))
 
-    citites_inputs = [[] for _ in range(n)]
+    graph = dict.fromkeys(range(1, n + 1), [])
 
     for i in range(n):
         for j in range(i + 1, n):
             if abs(cities_coords[i][0] - cities_coords[j][0]) + abs(cities_coords[i][1] - cities_coords[j][1]) <= k:
-                citites_inputs[i].append(j + 1)
-                citites_inputs[j].append(i + 1)
-
-    results = []
-    check_path(citites_inputs, results, [], path[0], path[1], 0)
+                graph[i + 1] = graph[i + 1] + [j + 1]
+                graph[j + 1] = graph[j + 1] + [i + 1]
     
 
     with open("G/output3.txt", "w") as f:
-        if len(results) > 0:
-            f.write(str(min(results)))
-        else:
-            f.write(str(-1))
+        f.write(str(bfs(graph, path[0], path[1])))
+            
 
 if __name__ == "__main__":
     main()
